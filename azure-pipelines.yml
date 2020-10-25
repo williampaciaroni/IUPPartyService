@@ -24,7 +24,7 @@ steps:
     testAssemblyVer2: |
       **\$(BuildConfiguration)\*test*.dll
       !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    searchFolder: '$(Build.ArtifactStagingDirectory)'
     codeCoverageEnabled: true
     platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
