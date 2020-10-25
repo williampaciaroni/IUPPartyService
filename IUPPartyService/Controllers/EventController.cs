@@ -61,13 +61,15 @@ namespace IUPPartyService.Controllers
                 HostName = e.HostName,
                 Distance = CalculateDistance(lat, lon, e.Latitude, e.Longitude),
                 Participants = e.Participant.ToArray().Length,
-                Image = e.ImageData
+                Image = e.ImageData,
+                Hidden = e.Hidden
             }).ToArray();
 
-            IList<FilteredEvent> eventsFilt = events.Where(e => e.Distance <= 20000).OrderBy(e => e.Distance).ToArray();
+            IList<FilteredEvent> eventsFilt = events.Where(e => e.Distance <= 20000 || e.Hidden==false).OrderBy(e => e.Distance).ToArray();
 
             return Ok(eventsFilt);
         }
+
 
         [HttpPost("{eventID}/join")]
         public IActionResult Join([FromBody] JoinEventRequest joinEventRequest,[FromRoute] string eventID)
@@ -83,41 +85,47 @@ namespace IUPPartyService.Controllers
                 }
                 else
                 {
-                    if (e.Participant.ToArray().Length < e.MaxPeople)
+                    if ( e.RequirePassword == true )
                     {
-                        if (e.Participant.FirstOrDefault(p => p.ParticipantKennitala == joinEventRequest.ParticipantKennitala) == null)
+                        if( e.Password == joinEventRequest.PartyPassword)
                         {
-                            Participant part = new Participant
-                            {
-                                EventRef = e.EventID,
-                                ParticipantKennitala = joinEventRequest.ParticipantKennitala,
-                                ParticipantName = joinEventRequest.ParticipantName
-                            };
-
-                            iUPPartyContext.Participant.Add(part);
-                            iUPPartyContext.SaveChanges();
-
-                            return Ok();
+                            return JoinEvent(e, joinEventRequest);
                         }
                         else
                         {
-                            return BadRequest("Cannot join twice to the same event.");
+                            return Unauthorized("The given password is not correct.");
                         }
-
                     }
                     else
                     {
-                        return BadRequest("This event has already reached the number of people allowed.");
+                        return JoinEvent(e, joinEventRequest);
                     }
-
+                    
                 }
             }
             else
             {
                 return Forbid("You cannot join more than one event.");
             }
-
             
+        }
+
+        [HttpPost("{eventID}/leave/{kennitala}")]
+        public IActionResult LeaveParty([FromRoute] string kennitala, [FromRoute] string eventID)
+        {
+            Participant p = iUPPartyContext.Participant.Find(kennitala);
+
+            if (p != null)
+            {
+                iUPPartyContext.Participant.Remove(p);
+                iUPPartyContext.SaveChanges();
+
+                return Ok("Participant with " + kennitala + " left the party.");
+            }
+            else
+            {
+                return NotFound("No participant with " + kennitala + " found.");
+            }
         }
 
         public static double CalculateDistance(double latitude1, double longitude1, double latitude2, double longitude2)
@@ -135,6 +143,11 @@ namespace IUPPartyService.Controllers
         {
             try
             {
+                string pass="";
+                if(newEventRequest.RequirePassword==true)
+                {
+                    pass = newEventRequest.Password;
+                }
                 Event e = new Event(
                     newEventRequest.Name,
                     newEventRequest.Description,
@@ -145,7 +158,10 @@ namespace IUPPartyService.Controllers
                     newEventRequest.HostName,
                     newEventRequest.Latitude,
                     newEventRequest.Longitude,
-                    Convert.FromBase64String(newEventRequest.Image)
+                    Convert.FromBase64String(newEventRequest.Image),
+                    newEventRequest.Hidden,
+                    newEventRequest.RequirePassword,
+                    newEventRequest.Password
                 );
 
                 iUPPartyContext.Events.Add(e);
@@ -158,6 +174,37 @@ namespace IUPPartyService.Controllers
                 return StatusCode(500, e);
             }
 
+        }
+
+
+        private IActionResult JoinEvent(Event e, JoinEventRequest joinEventRequest)
+        {
+            if (e.Participant.ToArray().Length < e.MaxPeople)
+            {
+                if (e.Participant.FirstOrDefault(p => p.ParticipantKennitala == joinEventRequest.ParticipantKennitala) == null)
+                {
+                    Participant part = new Participant
+                    {
+                        EventRef = e.EventID,
+                        ParticipantKennitala = joinEventRequest.ParticipantKennitala,
+                        ParticipantName = joinEventRequest.ParticipantName
+                    };
+
+                    iUPPartyContext.Participant.Add(part);
+                    iUPPartyContext.SaveChanges();
+
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Cannot join twice to the same event.");
+                }
+
+            }
+            else
+            {
+                return BadRequest("This event has already reached the number of people allowed.");
+            }
         }
 
     }

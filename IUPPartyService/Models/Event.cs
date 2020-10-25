@@ -29,6 +29,11 @@ namespace IUPPartyService.Models
         public double Longitude { get; set; }
         [Required]
         public byte[] ImageData { get; set; }
+        [Required]
+        public bool Hidden { get; set; }
+        [Required]
+        public bool RequirePassword { get; set; }
+        public string? Password { get; set; }
 
         public Event(ILazyLoader lazyLoader) : base(lazyLoader)
         { }
@@ -41,7 +46,7 @@ namespace IUPPartyService.Models
             set => _participant = value;
         }
 
-        public Event(string name, string description, int maxPeople, DateTime dateStart, DateTime dateEnd, string host, string hostName, double latitude, double longitude, byte[] image)
+        public Event(string name, string description, int maxPeople, DateTime dateStart, DateTime dateEnd, string host, string hostName, double latitude, double longitude, byte[] image, bool hidden, bool requirePassword, string? password)
         {
             this.Name = name;
             this.Description = description;
@@ -53,6 +58,9 @@ namespace IUPPartyService.Models
             this.Latitude = latitude;
             this.Longitude = longitude;
             this.ImageData = image;
+            this.Hidden = hidden;
+            this.RequirePassword = requirePassword;
+            this.Password = password;
         }
     }
 
@@ -64,6 +72,7 @@ namespace IUPPartyService.Models
         public double Distance { get; set; }
         public int Participants { get; set; }
         public byte[] Image { get; set; }
+        public bool Hidden { get; set; }
     }
 
     public class FilteredEventAll

@@ -4,5 +4,6 @@
     {
         public string ParticipantName { get; set; }
         public string ParticipantKennitala { get; set; }
+        public string PartyPassword { get; set; }
     }
 }

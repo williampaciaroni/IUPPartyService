@@ -12,5 +12,8 @@
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string Image { get; set; }
+        public bool Hidden { get; set; }
+        public bool RequirePassword { get; set; }
+        public string Password { get; set; }
     }
 }

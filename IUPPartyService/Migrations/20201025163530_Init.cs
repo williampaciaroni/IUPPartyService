@@ -21,7 +21,10 @@ namespace IUPPartyService.Migrations
                     HostName = table.Column<string>(nullable: false),
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
-                    ImageData = table.Column<byte[]>(nullable: false)
+                    ImageData = table.Column<byte[]>(nullable: false),
+                    Hidden = table.Column<bool>(nullable: false),
+                    RequirePassword = table.Column<bool>(nullable: false),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

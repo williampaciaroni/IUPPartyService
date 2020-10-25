@@ -1,32 +1,30 @@
 ﻿<Properties StartupConfiguration="{EAF5508B-8FCE-4B77-B8C9-5C49C8B264B8}|Default">
   <MonoDevelop.Ide.ItemProperties.IUPPartyService PreferredExecutionTarget="/Applications/Firefox.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="IUPPartyService.Tests/ParticipantTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="IUPPartyService/Controllers/EventController.cs">
     <Files>
-      <File FileName="IUPPartyService/Models/Event.cs" Line="37" Column="1" />
-      <File FileName="IUPPartyService/Models/Participant.cs" />
-      <File FileName="IUPPartyService/Context/IUPPartyContext.cs" />
-      <File FileName="IUPPartyService/Controllers/EventController.cs" />
-      <File FileName="IUPPartyService.Tests/ParticipantTest.cs" Line="10" Column="45" />
-      <File FileName="IUPPartyService.Tests/EventTest.cs" Line="3" Column="30" />
+      <File FileName="IUPPartyService/Models/Event.cs" Line="63" Column="38" />
+      <File FileName="IUPPartyService/Controllers/EventController.cs" Line="108" Column="61" />
+      <File FileName="IUPPartyService/Models/Requests/NewEventRequest.cs" Line="17" Column="45" />
+      <File FileName="IUPPartyService/Models/Requests/JoinEventRequest.cs" Line="7" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="IUPPartyService" expanded="True">
             <Node name="IUPPartyService" expanded="True">
-              <Node name="Models" expanded="True" />
+              <Node name="Context" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Requests" expanded="True" />
+              </Node>
             </Node>
-            <Node name="IUPPartyService.Tests" expanded="True">
-              <Node name="ParticipantTest.cs" selected="True" />
-            </Node>
+            <Node name="IUPPartyService.Tests" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
-          <Node name="IUPPartyService" expanded="True">
-            <Node name="IUPPartyService.Tests" selected="True" />
-          </Node>
+          <Node name="IUPPartyService" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
