@@ -8,7 +8,7 @@ namespace IUPPartyService.Tests
 {
     public class EventTest
     {
-        private Mock<Event> _Event;
+        private readonly Mock<Event> _Event;
 
         public EventTest()
         {
