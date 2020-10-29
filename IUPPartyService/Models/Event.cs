@@ -71,6 +71,7 @@ namespace IUPPartyService.Models
         public string HostName { get; set; }
         public double Distance { get; set; }
         public int Participants { get; set; }
+        public int MaxPeople { get; set; }
         public byte[] Image { get; set; }
         public bool Hidden { get; set; }
     }
@@ -81,5 +82,15 @@ namespace IUPPartyService.Models
         public string Name { get; set; }
         public string HostName { get; set; }
         public byte[] Image { get; set; }
+        public int MaxPeople { get; set; }
+    }
+
+    public class MyEvent
+    {
+        public string EventID { get; set; }
+        public string Name { get; set; }
+        public byte[] Image { get; set; }
+        public int Participants { get; set; }
+        public int MaxPeople { get; set; }
     }
 }

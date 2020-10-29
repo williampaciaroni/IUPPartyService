@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.ItemProperties.IUPPartyService PreferredExecutionTarget="/Applications/Firefox.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="IUPPartyService/Controllers/EventController.cs">
     <Files>
-      <File FileName="IUPPartyService/Models/Event.cs" Line="63" Column="38" />
-      <File FileName="IUPPartyService/Controllers/EventController.cs" Line="108" Column="61" />
-      <File FileName="IUPPartyService/Models/Requests/NewEventRequest.cs" Line="17" Column="45" />
-      <File FileName="IUPPartyService/Models/Requests/JoinEventRequest.cs" Line="7" Column="36" />
+      <File FileName="IUPPartyService/Models/Event.cs" Line="85" Column="43" />
+      <File FileName="IUPPartyService/Controllers/EventController.cs" Line="70" Column="82" />
+      <File FileName="IUPPartyService/Models/Requests/NewEventRequest.cs" />
+      <File FileName="IUPPartyService/Models/Requests/JoinEventRequest.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,18 +13,15 @@
           <Node name="IUPPartyService" expanded="True">
             <Node name="IUPPartyService" expanded="True">
               <Node name="Context" expanded="True" />
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="EventController.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True">
                 <Node name="Requests" expanded="True" />
               </Node>
             </Node>
             <Node name="IUPPartyService.Tests" expanded="True" />
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="IUPPartyService" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>

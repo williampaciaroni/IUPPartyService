@@ -49,25 +49,44 @@ namespace IUPPartyService.Controllers
             return Ok(events);
         }
 
+        [HttpGet("myEvents/{kennitala}")]
+        public IActionResult GetMyEvents([FromRoute] string kennitala)
+        {
+            IList<MyEvent> events = iUPPartyContext.Events.Where(ev => ev.Host==kennitala).Select(e => new MyEvent
+            {
+                EventID = e.EventID,
+                Name = e.Name,
+                Participants = e.Participant.ToArray().Length,
+                Image = e.ImageData,
+                MaxPeople = e.MaxPeople
+
+            }).ToArray();
+
+            return Ok(events);
+        }
+
         [HttpGet("getNearestEvents")]
         public IActionResult GetNearestEvents([FromQuery(Name = "latitude")] string latitude, [FromQuery(Name = "longitude")] string longitude)
         {
             double lat = Convert.ToDouble(latitude);
             double lon = Convert.ToDouble(longitude);
 
-            IList<FilteredEvent> events = iUPPartyContext.Events.Select(e => new FilteredEvent {
+            IList<FilteredEvent> events = iUPPartyContext.Events.Select(e => new FilteredEvent
+            {
                 EventID = e.EventID,
                 Name = e.Name,
                 HostName = e.HostName,
-                Distance = CalculateDistance(lat, lon, e.Latitude, e.Longitude),
+                Distance = CalculateDistance(lat, lon, e.Latitude, e.Longitude) / 1000.0,
                 Participants = e.Participant.ToArray().Length,
                 Image = e.ImageData,
-                Hidden = e.Hidden
+                Hidden = e.Hidden,
+                MaxPeople = e.MaxPeople
+
             }).ToArray();
 
-            IList<FilteredEvent> eventsFilt = events.Where(e => e.Distance <= 20000 || e.Hidden==false).OrderBy(e => e.Distance).ToArray();
+            IList<FilteredEvent> filteredEvents = events.Where(e => e.Distance <= 20 && e.Hidden == false).OrderBy(e => e.Distance).ToArray();
 
-            return Ok(eventsFilt);
+            return Ok(filteredEvents);
         }
 
 
