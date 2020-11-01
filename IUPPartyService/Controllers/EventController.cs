@@ -147,6 +147,21 @@ namespace IUPPartyService.Controllers
             }
         }
 
+        [HttpGet("{eventID}")]
+        public IActionResult DetailParty( [FromRoute] string eventID)
+        {
+            Event e = iUPPartyContext.Events.Find(eventID);
+
+            if (e != null)
+            {
+                return Ok(e);
+            }
+            else
+            {
+                return NotFound("No event with " + eventID + " found.");
+            }
+        }
+
         public static double CalculateDistance(double latitude1, double longitude1, double latitude2, double longitude2)
         {
             var d1 = latitude1 * (Math.PI / 180.0);

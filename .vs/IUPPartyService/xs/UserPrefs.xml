@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{EAF5508B-8FCE-4B77-B8C9-5C49C8B264B8}|Default">
   <MonoDevelop.Ide.ItemProperties.IUPPartyService PreferredExecutionTarget="/Applications/Firefox.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="IUPPartyService/Controllers/EventController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="IUPPartyService/Models/Event.cs">
     <Files>
-      <File FileName="IUPPartyService/Models/Event.cs" Line="85" Column="43" />
-      <File FileName="IUPPartyService/Controllers/EventController.cs" Line="70" Column="82" />
-      <File FileName="IUPPartyService/Models/Requests/NewEventRequest.cs" />
+      <File FileName="IUPPartyService/Models/Event.cs" Line="35" Column="50" />
+      <File FileName="IUPPartyService/Controllers/EventController.cs" Line="195" Column="21" />
+      <File FileName="IUPPartyService/Models/Requests/NewEventRequest.cs" Line="1" Column="1" />
       <File FileName="IUPPartyService/Models/Requests/JoinEventRequest.cs" />
     </Files>
     <Pads>
@@ -13,9 +13,7 @@
           <Node name="IUPPartyService" expanded="True">
             <Node name="IUPPartyService" expanded="True">
               <Node name="Context" expanded="True" />
-              <Node name="Controllers" expanded="True">
-                <Node name="EventController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
                 <Node name="Requests" expanded="True" />
               </Node>

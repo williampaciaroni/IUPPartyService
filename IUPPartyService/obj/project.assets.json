@@ -5760,7 +5760,7 @@
       "outputPath": "/Users/williampaciaroni/Projects/IUPPartyService/IUPPartyService/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/williampaciaroni/.config/NuGet/NuGet.Config"
+        "/Users/williampaciaroni/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
