@@ -93,4 +93,18 @@ namespace IUPPartyService.Models
         public int Participants { get; set; }
         public int MaxPeople { get; set; }
     }
+
+    public class EventDetail
+    {
+        public string EventID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string HostName { get; set; }
+        public double Distance { get; set; }
+        public string DateStart { get; set; }
+        public string DateEnd { get; set; }
+        public int Participants { get; set; }
+        public int MaxPeople { get; set; }
+        public byte[] Image { get; set; }
+    }
 }

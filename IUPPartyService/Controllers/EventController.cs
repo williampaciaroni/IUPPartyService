@@ -65,6 +65,28 @@ namespace IUPPartyService.Controllers
             return Ok(events);
         }
 
+
+        [HttpGet("joined/{kennitala}")]
+        public IActionResult EventJoined([FromRoute] string kennitala)
+        {
+            Participant p = iUPPartyContext.Participant.FirstOrDefault(p => p.ParticipantKennitala == kennitala);
+            if (p != null)
+            {
+                MyEvent m = new MyEvent
+                {
+                    EventID = p.Event.EventID,
+                    Name = p.Event.Name,
+                    Participants = p.Event.Participant.ToArray().Length,
+                    Image = p.Event.ImageData,
+                    MaxPeople = p.Event.MaxPeople
+
+                };
+                return Ok(m);
+            }
+            return NotFound("User with kennitala " + kennitala + " is not joining to any party.");
+
+        }
+
         [HttpGet("getNearestEvents")]
         public IActionResult GetNearestEvents([FromQuery(Name = "latitude")] string latitude, [FromQuery(Name = "longitude")] string longitude)
         {
@@ -94,7 +116,7 @@ namespace IUPPartyService.Controllers
         public IActionResult Join([FromBody] JoinEventRequest joinEventRequest,[FromRoute] string eventID)
         {
             Event e = iUPPartyContext.Events.Find(eventID);
-            Participant p = iUPPartyContext.Participant.Find(joinEventRequest.ParticipantKennitala);
+            Participant p = iUPPartyContext.Participant.FirstOrDefault(p => p.ParticipantKennitala==joinEventRequest.ParticipantKennitala);
 
             if (p == null)
             {
@@ -124,10 +146,28 @@ namespace IUPPartyService.Controllers
             }
             else
             {
-                return Forbid("You cannot join more than one event.");
+                return Unauthorized("You cannot join more than one event.");
             }
             
         }
+
+        [HttpGet("{eventID}/delete")]
+        public IActionResult DeleteEvent([FromRoute] string eventID)
+        {
+            Event e = iUPPartyContext.Events.Find(eventID);
+
+            if (e == null)
+            {
+                return NotFound("Event with this ID does not exist.");
+            }
+            else
+            {
+                iUPPartyContext.Events.Remove(e);
+                iUPPartyContext.SaveChanges();
+                return Ok();
+            }
+        }
+
 
         [HttpPost("{eventID}/leave/{kennitala}")]
         public IActionResult LeaveParty([FromRoute] string kennitala, [FromRoute] string eventID)
@@ -147,14 +187,27 @@ namespace IUPPartyService.Controllers
             }
         }
 
-        [HttpGet("{eventID}")]
-        public IActionResult DetailParty( [FromRoute] string eventID)
+        [HttpGet("{eventID}/details")]
+        public IActionResult DetailParty( [FromRoute] string eventID, [FromQuery(Name = "latitude")] string latitude, [FromQuery(Name = "longitude")] string longitude)
         {
             Event e = iUPPartyContext.Events.Find(eventID);
 
             if (e != null)
             {
-                return Ok(e);
+                EventDetail ed = new EventDetail
+                {
+                    EventID = e.EventID,
+                    Name = e.Name,
+                    Description = e.Description,
+                    HostName = e.HostName,
+                    Distance = CalculateDistance(Convert.ToDouble(latitude), Convert.ToDouble(longitude), e.Latitude, e.Longitude) / 1000.0,
+                    DateStart = e.DateStart.Date.ToString("dd/MM/yyyy"),
+                    DateEnd = e.DateEnd.Date.ToString("dd/MM/yyyy"),
+                    Participants = e.Participant.Count,
+                    MaxPeople = e.MaxPeople,
+                    Image = e.ImageData
+                };
+                return Ok(ed);
             }
             else
             {
